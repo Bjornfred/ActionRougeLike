@@ -9,6 +9,7 @@
 class USpringArmComponent;
 class UCameraComponent;
 class USInteractionComponent;
+class UAnimMontage;
 
 UCLASS()
 class ACTIONROUGELIKE_API ASCharacter : public ACharacter
@@ -17,9 +18,15 @@ class ACTIONROUGELIKE_API ASCharacter : public ACharacter
 
 protected:
 	
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, Category="Attack")
 	TSubclassOf<AActor> ProjectileClass;
 
+	UPROPERTY(EditAnywhere, Category="Attack")
+	UAnimMontage* AttackAnim;
+
+	UPROPERTY()
+	FTimerHandle Timerhandle_PrimaryAttack;
+	
 public:
 	// Sets default values for this character's properties
 	ASCharacter();
@@ -45,7 +52,9 @@ protected:
 	void PrimaryAttack();
 
 	void PrimaryInteract();
-
+	
+	void PrimaryAttack_TimeElapsed();
+	
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
